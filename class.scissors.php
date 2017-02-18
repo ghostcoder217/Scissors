@@ -81,8 +81,11 @@
 			// Clean text if set //
 			if($is_text) $html_final = htmlspecialchars($html_final, ENT_SUBSTITUTE);
 			
+			// Escape all occurences of '-' //
+			$identifier = str_replace("-", '\-', $identifier);
+			
 			// Replace the html //
-			$this->html = preg_replace("/{{{[$identifier\ ]+}}}/", $html_final, $this->html);
+			$this->html = preg_replace("/{{{\ $identifier\ }}}/", $html_final, $this->html);
 		}
 		
 		public function update_urls ($json_path) {
@@ -110,8 +113,11 @@
 					$json[$key] =  ((array_key_exists("HTTPS", $_SERVER) && $_SERVER['HTTPS'] == "on") ? "https://" : "http://") . $_SERVER['SERVER_NAME'] . '/' . $json[$key];
 				}
 				
+				// Escape all occurences of '-' //
+				$identifier = str_replace("-", '\-', $key);
+				
 				// Replace the links //
-				$this->html = preg_replace("/{{{[a:$key\ ]+}}}/", $json[$key], $this->html);
+				$this->html = preg_replace("/{{{\ a:$identifier\ }}}/", $json[$key], $this->html);
 			}
 			
 		}
