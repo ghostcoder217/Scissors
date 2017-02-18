@@ -88,12 +88,16 @@
 			$this->html = preg_replace("/{{{\ $identifier\ }}}/", $html_final, $this->html);
 		}
 		
-		public function update_urls ($json_path) {
+		public function update_urls ($json_path, $json_key = false) {
 			
 			/* -----------------------------------------------------------
 			 * This function replaces all of the identifiers with the prefix
 			 * 'a:' (ex. {{{ a:home }}} ) with url's defined inside a JSON file
 			 * within the main HTML directory
+			 * 
+			 * You can define a key for $json_key to restrict which variables
+			 * to loop through. If $json_key is false then only keys in the 
+			 * 'globals' object will be looped
 			 * ---------------------------------------------------------- */
 			
 			// Check if the JSON file exists //
@@ -104,20 +108,24 @@
 			$json = json_decode($json_raw, true);
 			if ($json == null) throw new Exception("Error parsing JSON file");
 			
-			foreach(array_keys($json) as $key) {
+			// Choose a set of key => values to loop through //
+			if(!$json_key) $parent_key = 'globals';
+			else $parent_key = $json_key;
+			
+			foreach(array_keys($json[$parent_key]) as $key) {
 				
 				// Check if the URL is complete //
-				if (!filter_var($json[$key], FILTER_VALIDATE_URL)) { 
+				if (!filter_var($json[$parent_key][$key], FILTER_VALIDATE_URL)) { 
 					
 					// If the URL is incomplete than append the SERVER URL //
-					$json[$key] =  ((array_key_exists("HTTPS", $_SERVER) && $_SERVER['HTTPS'] == "on") ? "https://" : "http://") . $_SERVER['SERVER_NAME'] . '/' . $json[$key];
+					$json[$parent_key][$key] =  ((array_key_exists("HTTPS", $_SERVER) && $_SERVER['HTTPS'] == "on") ? "https://" : "http://") . $_SERVER['SERVER_NAME'] . '/' . $json[$parent_key][$key];
 				}
 				
 				// Escape all occurences of '-' //
 				$identifier = str_replace("-", '\-', $key);
 				
 				// Replace the links //
-				$this->html = preg_replace("/{{{\ a:$identifier\ }}}/", $json[$key], $this->html);
+				$this->html = preg_replace("/{{{\ a:$identifier\ }}}/", $json[$parent_key][$key], $this->html);
 			}
 			
 		}
