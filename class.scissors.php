@@ -32,7 +32,7 @@
 				if (substr($html_dir, -1) != '/') $html_dir .= '/';
 				$this->html_dir = $html_dir;
 				
-			} else throw new Exception("Main html file directory is not defined");
+			} else if (isset($html_dir)) throw new Exception("Main html file directory could not be found");
 			
 		}
 		
