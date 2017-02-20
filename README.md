@@ -1,11 +1,11 @@
 # Scissors
-A PHP framework specialising in keeping PHP and HTML seperate and providing a means to maintaining links across a website from a single file.
+A PHP framework specializing in keeping PHP and HTML separate and providing a means to maintaining links across a website from a single file.
 
 ### Concept
 
-This program allows the developer to save snippets of pure HTML code to be constructed in PHP and echoed as a whole to the client so that HTML code is never copy-pasted between files. This method of 'constructing' HTML serverside also helps keep PHP and HTML seperated so that a developer never has to call the dreaded `<?php echo $html; ?>` all over the place, causing headaches in the long run. Plus it looks ugly, lets be honest.
+This program allows the developer to save snippets of pure HTML code to be constructed in PHP and echoed as a whole to the client so that HTML code is never copy-pasted between files. This method of 'constructing' HTML server side also helps keep PHP and HTML separated so that a developer never has to call the dreaded `<?php echo $html; ?>` all over the place, causing headaches in the long run. Plus it looks ugly, let's be honest.
 
-Scissors also helps keep URL's consistent throughout the website by allowing the developer to store every one in a JSON file with a special identifier ex `{ "page-home" : "/", "page-about" : "about/" }`. These identifiers can then be entered into the HTML files to be replaced with it's associated URL from the JSON file.
+Scissors also helps keep URL's consistent throughout the website by allowing the developer to store every one in a JSON file with a special identifier ex `{ "page-home" : "/", "page-about" : "about/" }`. These identifiers can then be entered into the HTML files to be replaced with its associated URL from the JSON file.
 
 ### How it Works
 
